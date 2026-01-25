@@ -1,27 +1,11 @@
 <?php
 
-echo "<h1>Docker + PHP + .env funcionando</h1>";
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$host = getenv('DB_HOST');
-$db   = getenv('DB_NAME');
-$user = getenv('DB_USER');
-$pass = getenv('DB_PASS');
+use Bevith\DockerPhp\Core\ViaCEp;
 
-if (!$host || !$db || !$user) {
-    die("<p>❌ Variáveis de ambiente não carregadas</p>");
-}
+$cep = new ViaCEp();
 
-try {
-    $pdo = new PDO(
-        "mysql:host=$host;dbname=$db;charset=utf8mb4",
-        $user,
-        $pass,
-        [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]
-    );
+$result = $cep->getAddressByZipCode('21235720');
 
-    echo "<p>✅ Conectado ao banco com sucesso!</p>";
-} catch (PDOException $e) {
-    echo "<p>❌ Erro: {$e->getMessage()}</p>";
-}
+print_r($result['logradouro']);
