@@ -12,9 +12,10 @@ class HttpClient
         $this->client = new \GuzzleHttp\Client();
     }
 
-    public function get($url, $header = [])
+    public function get($url, $query = [], $header = [])
     {
         $response = $this->client->request('GET', $url, [
+            'query' => $query,
             'headers' => $header
         ]);
 
