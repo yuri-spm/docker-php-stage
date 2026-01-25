@@ -23,7 +23,7 @@ $openWeatherApiKey = getenv('OPENWEATHER_API_KEY');
 $openWeather = new OpenWeather($openWeatherApiKey);
 
 
-$weather2 = $openWeather->currentWeather((string) $city);
+$weather2 = $openWeather->weaterForecast('Rio de Janeiro');
 
 echo "<pre>";
 var_dump($weather2);

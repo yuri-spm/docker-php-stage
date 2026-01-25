@@ -43,6 +43,41 @@ class OpenWeather
         }
     }
 
+    public function weaterForecast($city)
+    {
+        try {
+            $data = $this->getAPI('/data/2.5/forecast', [
+                'q' => $city,
+            ]);
+
+          echo '<pre>';
+            var_dump($data);
+            echo '</pre>';
+            exit;
+
+             $forecast = [];
+
+             foreach(array_slice($data['list'], 0, 3) as $item) {
+                 $forecast[] = [
+                     'date'        => $item['dt_txt'],
+                     'temp'        => (int) round($item['main']['temp']),
+                     'temp_min'    => (int) round($item['main']['temp_min']),
+                     'temp_max'    => (int) round($item['main']['temp_max']),
+                     'humidity'    => (int) $item['main']['humidity'],
+                     'wind'        => (int) round($item['wind']['speed'] ?? 0),
+                     'description' => $item['weather'][0]['description'] ?? '',
+                     'icon'        => $item['weather'][0]['icon'] ?? '',
+                 ];
+             }
+                
+            return $forecast;
+
+        }  catch (\Throwable $e) {
+            return ['erro' => 'Cidade não encontrada'];
+        }
+
+    }
+
    
     private function getAPI(string $resource, array $params = []): array
     {
