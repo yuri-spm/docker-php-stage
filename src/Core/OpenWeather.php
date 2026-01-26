@@ -50,11 +50,6 @@ class OpenWeather
                 'q' => $city,
             ]);
 
-          echo '<pre>';
-            var_dump($data);
-            echo '</pre>';
-            exit;
-
              $forecast = [];
 
              foreach(array_slice($data['list'], 0, 3) as $item) {

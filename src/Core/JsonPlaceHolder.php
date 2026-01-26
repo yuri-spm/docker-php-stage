@@ -14,26 +14,44 @@ class JsonPlaceHolder
         $this->httpClient = new HttpClient();
     }
 
-    public function getPosts($limit = 5):array
+    public function getPosts($limit = 5): array
     {
-        try{
-            $data = $this->httpClient->get(self::BASE_URL . 'posts');
-            if($data->getStatusCode() !== 200){
+        $data = self::request($this->httpClient->get(self::BASE_URL . 'posts'));
+        foreach (array_slice($data, 0, $limit) as $post) {
+            $posts[] = [
+                    'user_id' => $post['userId'],
+                    'id'      => $post['id'],
+                    'title'   => $post['title'],
+                    'body'   => $post['body'],
+                ];
+        }
+        return $posts ?? [];
+    }
+
+    public function getPost($id) 
+    {
+        $data = self::request($this->httpClient->get(self::BASE_URL . 'posts/' . $id));
+        return $data;
+    }
+
+    public function getComments($postId): array
+    {
+        $data = self::request($this->httpClient->get(self::BASE_URL . 'posts/' . $postId . '/comments'));
+        return $data;
+    }
+
+
+    private function request($response)
+    {
+        try {
+            $data = $response;
+            if ($data->getStatusCode() !== 200) {
                 return ['error' => 'Não foi possível buscar postagens'];
             }
-            foreach (array_slice(json_decode($data->getBody()->getContents(), true), 0, $limit) as $post) {
-                $posts[] = [
-                    'id'    => $post['id'],
-                    'title' => $post['title'],
-                    'body'  => $post['body'],
-                ];
-            }
 
-            return $posts;
-
-        }catch(\Exception $e){
+            return json_decode($data->getBody()->getContents(), true);
+        } catch (\Exception $e) {
             return ['error' => 'Não foi possível buscar postagens'];
         }
     }
-
 }
