@@ -40,18 +40,52 @@ class JsonPlaceHolder
         return $data;
     }
 
+    public function createPost($title, $body, $userId)
+    {
+        $postData = [
+            'title' => $title,
+            'body' => $body,
+            'userId' => $userId
+        ];
+
+        $data = self::request($this->httpClient->post(self::BASE_URL . 'posts', $postData, ['Content-type' => 'application/json; charset=UTF-8']));
+        return $data;
+        
+    }
+
+    public function updatePost($id, $title, $body, $userId)
+    {
+        $postData = [
+            'id' => $id,
+            'title' => $title,
+            'body' => $body,
+            'userId' => $userId
+        ];
+
+        $data = self::request($this->httpClient->put(self::BASE_URL . 'posts/' . $id, $postData, ['Content-type' => 'application/json; charset=UTF-8']));
+        return $data;
+    }
+
+
+    public function deletePost($id)
+    {
+        $data = self::request($this->httpClient->delete(self::BASE_URL . 'posts/' . $id));
+        return $data;
+    }
+
 
     private function request($response)
     {
         try {
             $data = $response;
-            if ($data->getStatusCode() !== 200) {
-                return ['error' => 'Não foi possível buscar postagens'];
+
+            if ($data->getStatusCode() < 200 || $data->getStatusCode() >= 300) {
+                return ['error' => 'Item não encontrado'];
             }
 
             return json_decode($data->getBody()->getContents(), true);
         } catch (\Exception $e) {
-            return ['error' => 'Não foi possível buscar postagens'];
+            return ['error' => 'Erro ao processar requisição: ' . $e->getMessage() ];
         }
     }
 }
