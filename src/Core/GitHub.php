@@ -8,10 +8,12 @@ class GitHub
 {
     private const BASE_URL = 'https://api.github.com/';
     private HttpClient $httpClient;
+    
 
     public function __construct()
     {
         $this->httpClient = new HttpClient();
+        $apiKey = getenv("GITHUB_API_KEY");
     }
 
     public function getUserRepos($user, $limit = 5)
@@ -24,7 +26,10 @@ class GitHub
 
     public function getRepoIssues($user, $repo, $limit = 5)
     {
-
+        $response = self::request(
+            $this->httpClient->get(self::BASE_URL . "repos/{$user}/{$repo}/commits")
+        );
+        return $response;
     }
 
     private function request($response)
