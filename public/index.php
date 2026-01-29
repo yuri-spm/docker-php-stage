@@ -10,7 +10,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 
 
-$repositories = (new GitHub())->getUserRepos('yuri-spm');
+$repositories = (new GitHub())->getAuthUserRepos('yuri-spm');
 
 
 
