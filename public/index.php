@@ -1,23 +1,36 @@
 <?php
 
+use Bevith\DockerPhp\Core\DummyJson;
 use Bevith\DockerPhp\Core\JsonPlaceHolder;
 use Bevith\DockerPhp\Core\OpenWeather;
 use Bevith\DockerPhp\Core\ViaCEp;
 use Bevith\DockerPhp\Core\GitHub;
-
+use Bevith\DockerPhp\Services\Helper;
+use PHPUnit\TextUI\Help;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 
 
-$repositories = (new GitHub())->getAuthUserRepos('yuri-spm');
+
+$data  = (new DummyJson())->getUsers(10);
+
+
+$admin = array_slice(Helper::filterRole($data, 'moderator'), 0, 5);
 
 
 
-foreach($repositories as $repo){
-    echo "Repositório: " . $repo['name'] . "<br>";
-    echo "Descrição: " . $repo['description'] . "<br>";
-    echo "URL: " . $repo['html_url'] . "<br>";
-    echo str_repeat("-", 40) . "<br>";
-    
-}   
+// echo "<pre>";
+// var_dump($admin);
+// echo "</pre>";
+// echo "<hr>";
+
+
+$departament = Helper::filterDepartament($data, 'Marketing');
+
+echo count($departament);
+echo "<hr>";
+
+echo "<pre>";
+var_dump($departament);
+echo "</pre>";
