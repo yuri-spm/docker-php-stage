@@ -28,9 +28,14 @@ $admin = array_slice(Helper::filterRole($data, 'moderator'), 0, 5);
 
 $departament = Helper::filterDepartament($data, 'Marketing');
 
-echo count($departament);
-echo "<hr>";
+// echo count($departament);
+// echo "<hr>";
 
+// echo "<pre>";
+// var_dump($departament);
+// echo "</pre>";
+
+$employees = Helper::countByDepartament($data, 'Marketing');
 echo "<pre>";
-var_dump($departament);
+var_dump($employees);
 echo "</pre>";
