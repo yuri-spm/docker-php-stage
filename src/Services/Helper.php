@@ -51,5 +51,31 @@ class Helper
         });
     }
 
+    public static function resumeDepartament($data, $departament)
+    {
+        $items = self::filterDepartament($data, $departament);
+        
+        $result = array_reduce($items, function($dataItens, $employee){
+            $dataItens['total'] ++;
+            $dataItens['sum_ages'] += $employee['age'];
+            $dataItens['employees'][]= $employee['firstName'] .' '. $employee['lastName'];
+
+            return $dataItens;
+
+        }, [
+              'total' => 0,
+              'sum_ages' => 0,
+              'employees' => []  
+           ]
+        );
+
+        if($result['total'] >0){
+            $result['average_age'] = $result['sum_ages'] / $result['total'];
+        }
+
+        return $result;
+       
+    }
+
 
 }
