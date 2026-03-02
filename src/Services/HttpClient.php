@@ -60,4 +60,19 @@ class HttpClient
 
         return $response;
     }
+
+    public function request($response)
+    {
+        try {
+            $data = $response;
+
+            if ($data->getStatusCode() < 200 || $data->getStatusCode() >= 300) {
+                return ['error' => 'Item não encontrado'];
+            }
+
+            return json_decode($data->getBody()->getContents(), true);
+        } catch (\Exception $e) {
+            return ['error' => 'Erro ao processar a requisição: ' . $e->getMessage()];
+        }
+    }
 }

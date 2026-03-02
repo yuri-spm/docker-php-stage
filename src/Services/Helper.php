@@ -77,5 +77,10 @@ class Helper
        
     }
 
+    public static function resumeAllDepartament()
+    {
+       
+    }
+
 
 }

@@ -1,19 +1,20 @@
 <?php
 
-use Bevith\DockerPhp\Core\DummyJson;
-use Bevith\DockerPhp\Core\JsonPlaceHolder;
-use Bevith\DockerPhp\Core\OpenWeather;
-use Bevith\DockerPhp\Core\ViaCEp;
-use Bevith\DockerPhp\Core\GitHub;
-use Bevith\DockerPhp\Services\Helper;
 use PHPUnit\TextUI\Help;
+use Bevith\DockerPhp\Core\IA;
+use Bevith\DockerPhp\Core\GitHub;
+use Bevith\DockerPhp\Core\ViaCEp;
+use Bevith\DockerPhp\Core\DummyJson;
+use Bevith\DockerPhp\Services\Helper;
+use Bevith\DockerPhp\Core\OpenWeather;
+use Bevith\DockerPhp\Core\JsonPlaceHolder;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 
 
 
-$data  = (new DummyJson())->getUsers(10);
+// $data  = (new DummyJson())->getUsers(10);
 
 
 // $admin = array_slice(Helper::filterRole($data, 'moderator'), 0, 5);
@@ -26,10 +27,10 @@ $data  = (new DummyJson())->getUsers(10);
 // echo "<hr>";
 
 
-$departament = Helper::filterDepartament($data, 'Marketing');
+// $departament = Helper::filterDepartament($data, 'Marketing');
 
-echo count($departament);
-echo "<hr>";
+// echo count($departament);
+// echo "<hr>";
 
 // echo "<pre>";
 // var_dump($departament);
@@ -47,7 +48,19 @@ echo "<hr>";
 // var_dump($employees);
 // echo "</pre>";
 
-$employees = Helper::resumeDepartament($data, 'Marketing');
-echo "<pre>";
-var_dump($employees);
-echo "</pre>";
+// $employees = Helper::resumeDepartament($data, 'Marketing');
+// echo "<pre>";
+// var_dump($employees);
+// echo "</pre>";
+
+$ia = new IA();
+
+$context = [
+    ['role' => 'user', 'content' => 'O que é PHP?'],
+    ['role' => 'assistant', 'content' => '...']
+];
+
+$result = $ia->chat(
+    'Explique Guzzle com exemplo simples',
+    $context
+);
