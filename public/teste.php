@@ -1182,10 +1182,7 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
                             <!-- row -->
                         </div>
                         <!-- col -->
-                        <div class="row w-100 aligncenter text-center mt-4" style="--bs-gutter-x: 0; ">
-                            <h6 class="bold color-black mb-0" style="font-size:11px">Site homologado pelo Tribunal de Justiça</h6>
-                            <img src="../web/tmg.jpg" style="width:40px;" alt="">
-                        </div>
+                      
                         <div class="div mt-1" style="height:auto;border:1px solid black;">
                             <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0;">
                                 <span class="color-black" style="font-size:12px">
@@ -1217,7 +1214,10 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
                         </div>
 
                     </div>
-                    <br>
+                      <div class="row w-100 aligncenter text-center mt-4" style="--bs-gutter-x: 0; ">
+                            <h6 class="bold color-black mb-0" style="font-size:11px">Site homologado pelo Tribunal de Justiça</h6>
+                            <img src="../web/tmg.jpg" style="width:40px;" alt="">
+                        </div>
 
 
                     <div class=" w-100">
