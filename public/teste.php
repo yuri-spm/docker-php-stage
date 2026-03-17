@@ -1055,8 +1055,8 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
                 <div class="row w-100" style=" padding:1em;border-top:1px solid black;--bs-gutter-x: 0;">
 
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:12px">DECRETO N. 21.981, DE 19 DE OUTUBRO DE 1932</span><br>
-                        <span class="color-black" style="font-size:11px">
+                        <span class="bold color-black" style="font-size:10px">DECRETO N. 21.981, DE 19 DE OUTUBRO DE 1932</span><br>
+                        <span class="color-black" style="font-size:9px">
                             O preposto indicado pelo leiloeiro prestará as mesmas provas de habilitação
                             exigidas no art. 2º, sendo considerado mandatário legal do preponente para efeito
                             de substituí-lo e de praticar, sob a sua responsabilidade, os atos que lhe forem
@@ -1070,32 +1070,32 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
 
 
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:12px">DADOS BANCÁRIOS PARA PAGAMENTO:</span>
+                        <span class="bold color-black" style="font-size:10px">DADOS BANCÁRIOS PARA PAGAMENTO:</span>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:12px">Nome: </span><span class="color-black" style="font-size:10px">Palácio dos Leilões</span>
+                        <span class="bold color-black" style="font-size:10px">Nome: </span><span class="color-black" style="font-size:8px">Palácio dos Leilões</span>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:12px">CPF: </span><span class="color-black" style="font-size:10px"><?= $cnpj ?></span>
+                        <span class="bold color-black" style="font-size:10px">CPF: </span><span class="color-black" style="font-size:8px"><?= $cnpj ?></span>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:12px">Banco: </span><span class="color-black" style="font-size:10px"><?= $banco ?></span>
+                        <span class="bold color-black" style="font-size:10px">Banco: </span><span class="color-black" style="font-size:8px"><?= $banco ?></span>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:12px">Agência: </span><span class="color-black" style="font-size:10px"><?= $agencia ?></span>
+                        <span class="bold color-black" style="font-size:10px">Agência: </span><span class="color-black" style="font-size:8px"><?= $agencia ?></span>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:12px">Conta Corrente: </span><span class="color-black" style="font-size:10px"><?= $conta ?></span>
+                        <span class="bold color-black" style="font-size:10px">Conta Corrente: </span><span class="color-black" style="font-size:8px"><?= $conta ?></span>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:12px">Valor Total do Pagamento: </span><span class="color-black" style="font-size:10px"><?= $total_nota_format ?></span>
+                        <span class="bold color-black" style="font-size:10px">Valor Total do Pagamento: </span><span class="color-black" style="font-size:8px"><?= $total_nota_format ?></span>
                     </div>
-                    <div class="container-fluid" style="font-size:12px">
+                    <div class="container-fluid" style="font-size:10px">
                         <br>
                         <h6 class="bold text-uppercase" style="color:#FF0000; margin-bottom:-14px;"> Quitação dos lotes via TED</h6><br>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:12px">DATA LIMITE PARA PAGAMENTO: </span><span class="color-black" style="font-size:10px"><?= $data_hoje ?> até às 16:00.</span>
+                        <span class="bold color-black" style="font-size:10px">DATA LIMITE PARA PAGAMENTO: </span><span class="color-black" style="font-size:8px"><?= $data_hoje ?> até às 16:00.</span>
                     </div>
                     <!--<div class="container-fluid" style="font-size:12px">-->
                     <!--    <h6 class="bold text-uppercase" style="color:#02538B; margin-bottom:-14px;"> ACEITAMOS PAGAMENTOS REALIZADOS PELO BANCO NUBANK E BANCO DO BRASIL</h6><BR>-->
@@ -1111,7 +1111,7 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
                             <div class="row p-2">
                                 <!-- col -->
                                 <div class="col aligncenter">
-                                    <img src="img/flat-logo.png" class="img-fluid" style="width:13em; margin-left: 5px!important;" alt="">
+                                    <img src="img/flat-logo.png" class="img-fluid" style="width:9em; margin-left: 5px!important;" alt="">
                                 </div>
                                 <!-- col -->
 
