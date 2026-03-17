@@ -1202,21 +1202,9 @@ leiloeiro às Juntas Comerciais, acompanhada da indicação do respesctivo subst
             <div class="div mt-1" style="height:auto;border:1px solid black;">
                 
                 <!-- bazio -->
-                
-                <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0; ">
-                <span class="color-black" style="font-size:12px">
-                Confirmo a compra descrita acima e declaro estar ciente e de acordo com todas as condições estabelecidas.
-                    </span>
-                </div>
-                <!-- outra 3 -->
-
-
-
-
-<!-- outra 4 -->
 
                 <!-- row -->
-                <div class="row w-100" style="border-top:1px solid black;border-bottom:1px solid black;--bs-gutter-x: 0;">
+                <div class="row w-100" style="border-bottom:1px solid black;--bs-gutter-x: 0;">
                     <!-- col -->
                     <div class="col" style="border-right: 1px solid black;">
                         <!-- row -->
@@ -1238,9 +1226,15 @@ leiloeiro às Juntas Comerciais, acompanhada da indicação do respesctivo subst
                             </div>
                             <!-- col -->
 
-                        </div>
-                        <!-- row -->
-                    </div>
+                </div>
+                <!-- row -->
+
+                <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0; ">
+                <span class="color-black" style="font-size:12px">
+                Confirmo a compra descrita acima e declaro estar ciente e de acordo com todas as condições estabelecidas.
+                    </span>
+                </div>
+            </div>
                     <!-- col -->
 
                     <!-- col -->

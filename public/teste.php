@@ -1055,8 +1055,8 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
                 <div class="row w-100" style=" padding:1em;border-top:1px solid black;--bs-gutter-x: 0;">
 
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:13px">DECRETO N. 21.981, DE 19 DE OUTUBRO DE 1932</span><br>
-                        <span class="color-black" style="font-size:13px">
+                        <span class="bold color-black" style="font-size:12px">DECRETO N. 21.981, DE 19 DE OUTUBRO DE 1932</span><br>
+                        <span class="color-black" style="font-size:11px">
                             O preposto indicado pelo leiloeiro prestará as mesmas provas de habilitação
                             exigidas no art. 2º, sendo considerado mandatário legal do preponente para efeito
                             de substituí-lo e de praticar, sob a sua responsabilidade, os atos que lhe forem
@@ -1070,32 +1070,32 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
 
 
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:13px">DADOS BANCÁRIOS PARA PAGAMENTO:</span>
+                        <span class="bold color-black" style="font-size:12px">DADOS BANCÁRIOS PARA PAGAMENTO:</span>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:13px">Nome: </span><span class="color-black" style="font-size:13px">Palácio dos Leilões</span>
+                        <span class="bold color-black" style="font-size:12px">Nome: </span><span class="color-black" style="font-size:10px">Palácio dos Leilões</span>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:13px">CPF: </span><span class="color-black" style="font-size:13px"><?= $cnpj ?></span>
+                        <span class="bold color-black" style="font-size:12px">CPF: </span><span class="color-black" style="font-size:10px"><?= $cnpj ?></span>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:13px">Banco: </span><span class="color-black" style="font-size:13px"><?= $banco ?></span>
+                        <span class="bold color-black" style="font-size:12px">Banco: </span><span class="color-black" style="font-size:10px"><?= $banco ?></span>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:13px">Agência: </span><span class="color-black" style="font-size:13px"><?= $agencia ?></span>
+                        <span class="bold color-black" style="font-size:12px">Agência: </span><span class="color-black" style="font-size:10px"><?= $agencia ?></span>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:13px">Conta Corrente: </span><span class="color-black" style="font-size:13px"><?= $conta ?></span>
+                        <span class="bold color-black" style="font-size:12px">Conta Corrente: </span><span class="color-black" style="font-size:10px"><?= $conta ?></span>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:13px">Valor Total do Pagamento: </span><span class="color-black" style="font-size:13px"><?= $total_nota_format ?></span>
+                        <span class="bold color-black" style="font-size:12px">Valor Total do Pagamento: </span><span class="color-black" style="font-size:10px"><?= $total_nota_format ?></span>
                     </div>
                     <div class="container-fluid" style="font-size:12px">
                         <br>
                         <h6 class="bold text-uppercase" style="color:#FF0000; margin-bottom:-14px;"> Quitação dos lotes via TED</h6><br>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:13px">DATA LIMITE PARA PAGAMENTO: </span><span><?= $data_hoje ?> até às 16:00.</span>
+                        <span class="bold color-black" style="font-size:12px">DATA LIMITE PARA PAGAMENTO: </span><span class="color-black" style="font-size:10px"><?= $data_hoje ?> até às 16:00.</span>
                     </div>
                     <!--<div class="container-fluid" style="font-size:12px">-->
                     <!--    <h6 class="bold text-uppercase" style="color:#02538B; margin-bottom:-14px;"> ACEITAMOS PAGAMENTOS REALIZADOS PELO BANCO NUBANK E BANCO DO BRASIL</h6><BR>-->
@@ -1111,7 +1111,7 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
                             <div class="row p-2">
                                 <!-- col -->
                                 <div class="col aligncenter">
-                                    <img src="img/flat-logo.png" class="img-fluid" style="width:19em; margin-left: 8px!important;" alt="">
+                                    <img src="img/flat-logo.png" class="img-fluid" style="width:13em; margin-left: 5px!important;" alt="">
                                 </div>
                                 <!-- col -->
 
@@ -1154,12 +1154,12 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
                                 <!--<div class="w-100 mt-2" style="border-top:1px dashed black; margin-left: -6px;"></div>-->
                                 <!-- div separa -->
 
-                                <div class="container-fluid aligncenter" style="margin-top:15px;">
+                                <div class="container-fluid aligncenter" style="margin-top:10px;">
                                     <h6 class="bold mb-0" style="color:black">TERMO DE RESPONSABILIDADE</h6>
 
                                 </div>
                                 <div class="container-fluid aligncenter mt-1">
-                                    <p class=" mt-0 mb-0" style="font-size:12px; font-weight:400;">BR-262, KM 375 - BOA VISTA DA SERRA, JUATUBA - MG, 35675-000</p>
+                                    <p class=" mt-0 mb-0" style="font-size:9px; font-weight:400;">BR-262, KM 375 - BOA VISTA DA SERRA, JUATUBA - MG, 35675-000</p>
 
                                 </div>
 
@@ -1170,130 +1170,60 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
 
 
                                 <div class="container-fluid aligncenter">
-                                    <p class="bold color-black mt-0 mb-0" style="font-size:13px">EMITIDO EM: <?= $data_hoje ?></p>
+                                    <p class="bold color-black mt-0 mb-0" style="font-size:11px">EMITIDO EM: <?= $data_hoje ?></p>
                                 </div>
                                 <div class="container-fluid aligncenter mt-1">
-                                    <p class=" mt-0 mb-0" style="font-size:12px; font-weight:400;">Atendimento: (31) 2180-3306 / (31) 3058-2634 / (31) 99704-2767</p>
+                                    <p class=" mt-0 mb-0" style="font-size:9px; font-weight:400;">Atendimento: (31) 2180-3306 / (31) 3058-2634 / (31) 99704-2767</p>
                                 </div>
                                 <div class="container-fluid aligncenter mt-1">
-                                    <p class=" mt-0 mb-0" style="font-size:12px; font-weight:400;"><a href="https://palaciodeleilao.com/">www.palaciodeleilao.com</a></p>
+                                    <p class=" mt-0 mb-0" style="font-size:9px; font-weight:400;"><a href="https://palaciodeleilao.com/">www.palaciodeleilao.com</a></p>
                                 </div>
                             </div>
                             <!-- row -->
                         </div>
                         <!-- col -->
-
-
-
-                    </div>
-                    <br>
-                    <div class="row w-100 aligncenter text-center mt-4" style="--bs-gutter-x: 0; ">
-                        <h6 class="bold color-black mb-0" style="font-size:15px">Site homologado pelo Tribunal de Justiça</h6>
-                        <img src="../web/tmg.jpg" style="width:40px;" alt="">
-                    </div>
-
-                    <div class=" w-100">
-
-                        </br></br>
+                        <div class="row w-100 aligncenter text-center mt-4" style="--bs-gutter-x: 0; ">
+                            <h6 class="bold color-black mb-0" style="font-size:11px">Site homologado pelo Tribunal de Justiça</h6>
+                            <img src="../web/tmg.jpg" style="width:40px;" alt="">
+                        </div>
                         <div class="div mt-1" style="height:auto;border:1px solid black;">
-
-                            <!-- bazio -->
-
-                            <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0; ">
+                            <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0;">
                                 <span class="color-black" style="font-size:12px">
                                     Confirmo a compra descrita acima e declaro estar ciente e de acordo com todas as condições estabelecidas.
                                 </span>
-
-                                <!-- outra 3 -->
-
-
-
-
-                                <!-- outra 4 -->
-
-                                <!-- row -->
-
-                                <!-- col -->
-                                <div class="col" style="border-right: 1px solid black;">
-                                    <!-- row -->
-                                    <div class="row">
-                                        <!-- col -->
-                                        <div class="col">
-
-                                            <!-- linha -->
-                                            <div class="text-start" style="height:5px; width:200px; border-top:1px solid black;margin-top:5em;margin-left:30px;"></div>
-                                            <!-- linha -->
-                                            <div class="w-100" style="padding-left:30px">
-                                                <p class="mb-0"><strong>Nome: </strong> <?= $nome_arrematante ?></p>
-                                            </div>
-                                            <div class="w-100" style="padding-left:30px">
-                                                <p class="mb-0"><strong>CPF: </strong> <?= $cpf_arrematante ?></p>
-                                            </div>
-
-
-                                        </div>
-                                        <!-- col -->
-
-                                    </div>
-                                    <!-- row -->
-                                </div>
-                                <!-- col -->
-
-                                <!-- col -->
-                                <div class="col">
-                                    <!-- row -->
-                                    <div class="row">
-
-                                        <!-- col -->
-                                        <div class="col">
-
-
-
-
-
-                                            <!-- linha -->
-                                            <div class="text-start" style="height:5px; width:200px; border-top:1px solid black; margin-left:30px; margin-top:5em;"></div>
-                                            <!-- linha -->
-                                            <img src="img/assinatura.png" style="width: 8em; margin-top: -90px;  margin-left: 2em; " alt="">
-                                            <div class="w-100" style="padding-left:30px; margin-top: 15px;">
-
-                                                <p class="mb-0" style="margin-top:-120px"><strong>Leiloeiro (a): </strong><?= $razao_social ?></p>
-                                            </div>
-                                            <div class="w-100" style="padding-left:30px">
-                                                <p class="mb-0"><strong>Matricula: </strong> 394</p>
-                                            </div>
-                                            <div class="w-100" style="padding-left:30px; font-size: 14px;">
-                                                <p class="mb-0">JUATUBA/MG - <?= $data_hoje ?>.</p>
-                                            </div>
-
-
-                                        </div>
-                                        <!-- col -->
-
-                                    </div>
-                                    <!-- row -->
-                                </div>
-                                <!-- col -->
-
-
-
                             </div>
-                            <!-- row -->
 
-                            <!-- outra 4 -->
+                            <div style="display:flex; width:100%; border-top:1px solid black; border-bottom:1px solid black; align-items:flex-start;">
+                                <div style="width:50%; border-right:1px solid black; padding:24px 18px 10px 24px; box-sizing:border-box;">
+                                    <div class="text-start" style="height:5px; width:170px; border-top:1px solid black; margin-bottom:10px;"></div>
+                                    <p class="mb-0" style="font-size:14px;"><strong>Nome: </strong><?= $nome_arrematante ?></p>
+                                    <p class="mb-0" style="font-size:14px;"><strong>CPF: </strong><?= $cpf_arrematante ?></p>
+                                </div>
 
+                                <div style="width:50%; padding:24px 18px 10px 24px; box-sizing:border-box;">
+                                    <div class="text-start" style="height:5px; width:170px; border-top:1px solid black; margin-bottom:10px;"></div>
+                                    <img src="img/assinatura.png" style="width:6.5em; margin-top:-58px; margin-left:1.4em;" alt="">
+                                    <p class="mb-0" style="margin-top:-72px; font-size:13px;"><strong>Leiloeiro (a): </strong><?= $razao_social ?></p>
+                                    <p class="mb-0" style="font-size:13px;"><strong>Matricula: </strong>394</p>
+                                    <p class="mb-0" style="font-size:13px;">JUATUBA/MG - <?= $data_hoje ?>.</p>
+                                </div>
+                            </div>
 
-                            <!-- outra 5 -->
-                            <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0; ">
+                            <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0;">
                                 <span class="bold color-black" style="font-size:11px">
                                     APÓS O PAGAMENTO ESTE DOCUMENTO DEVERÁ SER ASSINADO E RECONHECIDO FIRMA POR AUTENTICIDADE DO ARREMATANTE. DOCUMENTO ASSINADO DIGITALMENTE NOS TERMOS DA LEI 11.419/2006, CONFORME IMPRESSÃO À MARGEM DIREITA.
                                 </span>
                             </div>
-                            <!-- outra 5 -->
-
-
-
                         </div>
+
+                    </div>
+                    <br>
+
+
+                    <div class=" w-100">
+
+                        </br></br>
+
                         <!-- div que ta com borda -->
 
                         <!-- <div class="container aligncenter text-center" style="--bs-gutter-x: 0; ">
