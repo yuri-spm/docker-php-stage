@@ -2,7 +2,6 @@
 
 namespace Bevith\DockerPhp\Services;
 
-
 class HttpClient
 {
     private $client;

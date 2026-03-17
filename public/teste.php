@@ -1,93 +1,171 @@
 <?php
-include_once "include/conn.php";
+// include_once "include/conn.php"; // DESATIVADO
+
 date_default_timezone_set('America/Sao_Paulo');
 
 $data = date("d-m-Y");
 $data_hoje = date("d/m/Y");
 $hora_hoje = date("H");
 
+$data_prazo = date('d/m/Y', strtotime("+1 days", strtotime($data)));
 
-$data_prazo = date('d/m/Y', strtotime("+1 days",strtotime($data)));
+/*
+|--------------------------------------------------------------------------
+| MOCK (SIMULANDO BANCO)
+|--------------------------------------------------------------------------
+*/
 
-// $id_lote = 232;
-$patio = $_GET['patio'];
-$frete = $_GET['frete'];
-// $patio = '0,00';
-// $frete = '0,00';
- $patio_format_calc = str_replace('.','',$patio);
- $patio_format_calc = str_replace(',','.',$patio_format_calc);
+$lotes = [
+    [
+        'id' => 232,
+        'situacao' => '2',
+        'nome' => 'Lote Teste 001',
+        'lances' => 15000,
+        'lances_cadastro' => 1,
+        'data_ini' => '2026-03-16 10:30:00'
+    ]
+];
 
- $frete_format_calc = str_replace('.','',$frete);
- $frete_format_calc = str_replace(',','.',$frete_format_calc);
+$contas_bancarias = [
+    [
+        'id' => 2,
+        'razao_social' => 'Palácio dos Leilões',
+        'agencia' => '1234',
+        'conta' => '56789-0',
+        'banco' => 'Banco do Brasil',
+        'pix' => 'financeiro@palaciodeleilao.com',
+        'cnpj' => '12.345.678/0001-99',
+        'matricula' => '394'
+    ]
+];
 
+$cadastro = [
+    [
+        'id' => 1,
+        'nome' => 'Yuri do Monte',
+        'rua' => 'Rua Teste',
+        'numero' => '123',
+        'email' => 'yuri@email.com',
+        'cpf' => '123.456.789-00',
+        'estados' => 'MG',
+        'complemento' => 'Apto 101',
+        'cidades' => 'Belo Horizonte',
+        'telefone' => '3133333333',
+        'celular' => '31999999999',
+        'bairro' => 'Centro',
+        'cep' => '30100-000'
+    ]
+];
 
-$id_lote = $_GET['lote'];
-$id_conta = $_GET['conta'];
-// $id_lote = 232;
-// $id_conta = 2;
-// verifica
+/*
+|--------------------------------------------------------------------------
+| INPUT MOCK (SUBSTITUI $_GET)
+|--------------------------------------------------------------------------
+*/
 
-$sql = $pdo->prepare("SELECT situacao FROM lotes WHERE id ='$id_lote'");
-$sql->execute();
+$patio = $_GET['patio'] ?? '100,00';
+$frete = $_GET['frete'] ?? '50,00';
+$id_lote = $_GET['lote'] ?? 232;
+$id_conta = $_GET['conta'] ?? 2;
 
-foreach ($sql as $info) :
-    $situacao = $info['situacao'];
-endforeach;
+/*
+|--------------------------------------------------------------------------
+| FORMATOS
+|--------------------------------------------------------------------------
+*/
+
+$patio_format_calc = str_replace('.', '', $patio);
+$patio_format_calc = str_replace(',', '.', $patio_format_calc);
+
+$frete_format_calc = str_replace('.', '', $frete);
+$frete_format_calc = str_replace(',', '.', $frete_format_calc);
+
+/*
+|--------------------------------------------------------------------------
+| SITUAÇÃO (ANTES ERA SELECT)
+|--------------------------------------------------------------------------
+*/
+
+foreach ($lotes as $info) {
+    if ($info['id'] == $id_lote) {
+        $situacao = $info['situacao'];
+        break;
+    }
+}
 
 if ($situacao != '2') :
     header("Location: index.php");
+    exit;
 endif;
 
-// dados conta
+/*
+|--------------------------------------------------------------------------
+| CONTA BANCÁRIA (ANTES ERA SELECT)
+|--------------------------------------------------------------------------
+*/
 
-$sql = $pdo->prepare("SELECT * FROM contas_bancarias WHERE id = '$id_conta'");
-$sql->execute();
-
-foreach ($sql as $info) :
-    $razao_social = $info['razao_social'];
-    $agencia = $info['agencia'];
-    $conta = $info['conta'];
-    $banco = $info['banco'];
-    $pix = $info['pix'];
-    $cnpj = $info['cnpj'];
-	$matricula = $info['matricula'];
+foreach ($contas_bancarias as $info) :
+    if ($info['id'] == $id_conta) {
+        $razao_social = $info['razao_social'];
+        $agencia = $info['agencia'];
+        $conta = $info['conta'];
+        $banco = $info['banco'];
+        $pix = $info['pix'];
+        $cnpj = $info['cnpj'];
+        $matricula = $info['matricula'];
+    }
 endforeach;
 
-$sql = $pdo->prepare("SELECT * FROM lotes WHERE id ='$id_lote'");
-$sql->execute();
+/*
+|--------------------------------------------------------------------------
+| LOTE (ANTES ERA SELECT)
+|--------------------------------------------------------------------------
+*/
 
-foreach ($sql as $info) :
-    $nome_lote = $info['nome'];
-    $lance_lote = $info['lances'];
-    $id_arrematante = $info['lances_cadastro'];
-    $data_ini = $info['data_ini'];
+foreach ($lotes as $info) :
+    if ($info['id'] == $id_lote) {
+        $nome_lote = $info['nome'];
+        $lance_lote = $info['lances'];
+        $id_arrematante = $info['lances_cadastro'];
+        $data_ini = $info['data_ini'];
 
-    $format = explode(' ', $data_ini);
-    $data = $format[0];
-    $format_data = explode('-', $data);
-    $data_final = $format_data[2] . '/' . $format_data[1] . '/' . $format_data[0];
+        $format = explode(' ', $data_ini);
+        $data = $format[0];
+        $format_data = explode('-', $data);
+        $data_final = $format_data[2] . '/' . $format_data[1] . '/' . $format_data[0];
+    }
 endforeach;
 
 $valor_lance = number_format($lance_lote, 2, ',', '.');
 
-//  dados arrematante 
-$sql = $pdo->prepare("SELECT * FROM cadastro WHERE id ='$id_arrematante'");
-$sql->execute();
+/*
+|--------------------------------------------------------------------------
+| ARREMATANTE (ANTES ERA SELECT)
+|--------------------------------------------------------------------------
+*/
 
-foreach ($sql as $info) :
-    $nome_arrematante = $info['nome'];
-    $rua_arrematante = $info['rua'];
-    $n_arrematante = $info['numero'];
-    $email_arrematante = $info['email'];
-    $cpf_arrematante = $info['cpf'];
-    $estado_arrematante = $info['estados'];
-    $compl_arrematante = $info['complemento'];
-    $cidade_arrematante = $info['cidades'];
-    $telefone_arrematante = $info['telefone'];
-    $celular_arrematante = $info['celular'];
-    $bairro_arrematante = $info['bairro'];
-    $cep_arrematante = $info['cep'];
+foreach ($cadastro as $info) :
+    if ($info['id'] == $id_arrematante) {
+        $nome_arrematante = $info['nome'];
+        $rua_arrematante = $info['rua'];
+        $n_arrematante = $info['numero'];
+        $email_arrematante = $info['email'];
+        $cpf_arrematante = $info['cpf'];
+        $estado_arrematante = $info['estados'];
+        $compl_arrematante = $info['complemento'];
+        $cidade_arrematante = $info['cidades'];
+        $telefone_arrematante = $info['telefone'];
+        $celular_arrematante = $info['celular'];
+        $bairro_arrematante = $info['bairro'];
+        $cep_arrematante = $info['cep'];
+    }
 endforeach;
+
+/*
+|--------------------------------------------------------------------------
+| CÁLCULOS (MANTIDO IGUAL)
+|--------------------------------------------------------------------------
+*/
 
 $total_produto =  $lance_lote;
 $total_produto = number_format($total_produto, 2, '.', '');
@@ -97,13 +175,9 @@ $total_comissao_func = number_format($total_comissao, 2, '.', '');
 $total_comissao = number_format($total_comissao, 2, ',', '.');
 
 $total_nota = $total_produto + $total_comissao_func;
-
 $total_nota = $total_nota + $frete_format_calc + $patio_format_calc;
 
 $total_nota_format = number_format($total_nota, 2, ',', '.');
-
-
-
 ?>
 <html lang="pt-br">
 
@@ -150,6 +224,7 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
             height: 27em;
             position: running(div_marca_dagua);
         }
+
         .div_marca_dagua2 {
             margin-top: 12em;
             margin-left: 5em;
@@ -163,7 +238,7 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
             height: 27em;
             position: running(div_marca_dagua);
         }
-      
+
         .color-black {
             color: black;
         }
@@ -290,89 +365,7 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
 
             <div class="div mt-1" style="height:auto;border:1px solid black;">
 
-                <!-- row -->
-                <div class="row">
-                    <!-- col -->
-                    <div class="col aligncenter" style="border-right: 1px solid black;">
-                        <!-- row -->
-                        <div class="row p-2">
-                            <!-- col -->
-                            <div class="col aligncenter">
-                                <img src="img/flat-logo.png" class="img-fluid" style="width:19em; margin-left: 8px!important;" alt="">
-                            </div>
-                            <!-- col -->
 
-                        </div>
-                        <!-- row -->
-                    </div>
-                    <!-- col -->
-
-                    <!-- col -->
-                    <div class="col-8">
-                        <!-- row -->
-                        <div class="row p-2">
-                            <!-- col -->
-                            <div class="col aligncenter" id="">
-                                <!--<span data-ref="2f98448b-186a-4023-9218-d84623b0713e" style="margin-top: 32px;font-size: 12px;  font-weight: bold;">
-                                    3654 6498 5284 1544 87974 6558 0555 8447 5221 8477 4211 8557 2473</span>-->
-                                <!-- <img src="img/codigo.webp" class="img-fluid" alt=""> -->
-                            </div>
-                            <!-- col -->
-                            <!-- col -->
-                            <!-- <div class="col-7">
-                                <div class="aligncenter">
-                                    <span style="font-size:10px; font-weight:bold; color:black; text-align:center">
-                                        JUNTA COMERCIAL DO
-                                        ESTADO DE SÃO PAULO:
-                                    </span>
-                                </div>
-                                <div class="w-100 aligncenter">
-                                    <span style="font-size:10px">
-                                        institucional.jucesponline-br-gov.org
-                                    </span>
-                                </div>
-
-
-
-                            </div> -->
-                            <!-- col -->
-
-                            <!-- div separa -->
-                            <!--<div class="w-100 mt-2" style="border-top:1px dashed black; margin-left: -6px;"></div>-->
-                            <!-- div separa -->
-
-                            <div class="container-fluid aligncenter" style="margin-top:15px;">
-                                <h6 class="bold mb-0" style="color:black">TERMO DE RESPONSABILIDADE</h6>
-
-                            </div>
-                          <div class="container-fluid aligncenter mt-1">
-                                <p class=" mt-0 mb-0" style="font-size:12px; font-weight:400;">BR-262, KM 375 - BOA VISTA DA SERRA, JUATUBA - MG, 35675-000</p>
-
-                            </div>
-                            
-
-                            <!--<div class="container-fluid aligncenter mt-1">
-                                <p class="bold color-black mt-0 mb-0" style="font-size:14px">PALÁCIO DOS LEILÕES</p>
-                            </div>-->
-                            
-                          
-                          <div class="container-fluid aligncenter">
-                                <p class="bold color-black mt-0 mb-0" style="font-size:13px">EMITIDO EM: <?=$data_hoje?></p>
-                            </div>
-                            <div class="container-fluid aligncenter mt-1">
-                                <p class=" mt-0 mb-0" style="font-size:12px; font-weight:400;">Atendimento: (31) 2180-3306 / (31) 3058-2634 / (31) 99704-2767</p>
-                            </div>
-                            <div class="container-fluid aligncenter mt-1">
-                                <p class=" mt-0 mb-0" style="font-size:12px; font-weight:400;"><a href="https://palaciodeleilao.com/">www.palaciodeleilao.com</a></p>
-                            </div>
-                        </div>
-                        <!-- row -->
-                    </div>
-                    <!-- col -->
-
-
-
-                </div>
                 <!-- row -->
 
 
@@ -393,7 +386,7 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
 
                         <div class="w-100 margin-0  mt-2 aligncenter">
                             <span style="font-size:10px; color:black; ">
-                             <?= $razao_social ?>
+                                <?= $razao_social ?>
                             </span>
                         </div>
                     </div>
@@ -962,7 +955,7 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
                     <div class="col padding-0" style="border-right:1px solid black">
                         <div class="w-100 margin-0 mt-1 aligncenter">
                             <span style="font-size:10px; color:black; font-weight:bold;">
-                            Comissão (5%)
+                                Comissão (5%)
                             </span>
                         </div>
                         <!-- div separa -->
@@ -992,7 +985,7 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
 
                         <div class="w-100 margin-0  mt-2 aligncenter">
                             <span style="font-size:10px; color:black; ">
-                                R$ <?=$patio?>
+                                R$ <?= $patio ?>
                             </span>
                         </div>
                     </div>
@@ -1014,7 +1007,7 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
 
                         <div class="w-100 margin-0  mt-2 aligncenter">
                             <span style="font-size:10px; color:black; ">
-                                R$ <?=$frete?>
+                                R$ <?= $frete ?>
                             </span>
                         </div>
                     </div>
@@ -1060,21 +1053,21 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
 
                 <!-- cont -->
                 <div class="row w-100" style=" padding:1em;border-top:1px solid black;--bs-gutter-x: 0;">
-                  
-                  <div class="container-fluid">
+
+                    <div class="container-fluid">
                         <span class="bold color-black" style="font-size:13px">DECRETO N. 21.981, DE 19 DE OUTUBRO DE 1932</span><br>
-                    <span class="color-black" style="font-size:13px">
-O preposto indicado pelo leiloeiro prestará as mesmas provas de habilitação
-exigidas no art. 2º, sendo considerado mandatário legal do preponente para efeito
-de substituí-lo e de praticar, sob a sua responsabilidade, os atos que lhe forem
-inerentes.<br><br>
-Parágrafo único.
-A destituição dos prepostos poderá ser dada mediante simples comunicação dos
-leiloeiro às Juntas Comerciais, acompanhada da indicação do respesctivo substituto.
-						
-						O Palácio dos Leilões, nomeia como representante financeiro(a) Sr.(a) <?= $razao_social ?>, portador do CPF: <?= $cnpj ?>, devendo este assumir as responsabilidades do referido oficio em conformidade com a Lei 9.973/200, e Decreto nº 3.855/2001 que regulamenta a matéria.</span><span class="color-black" style="font-size:13px"><br><br>
+                        <span class="color-black" style="font-size:13px">
+                            O preposto indicado pelo leiloeiro prestará as mesmas provas de habilitação
+                            exigidas no art. 2º, sendo considerado mandatário legal do preponente para efeito
+                            de substituí-lo e de praticar, sob a sua responsabilidade, os atos que lhe forem
+                            inerentes.<br><br>
+                            Parágrafo único.
+                            A destituição dos prepostos poderá ser dada mediante simples comunicação dos
+                            leiloeiro às Juntas Comerciais, acompanhada da indicação do respesctivo substituto.
+
+                            O Palácio dos Leilões, nomeia como representante financeiro(a) Sr.(a) <?= $razao_social ?>, portador do CPF: <?= $cnpj ?>, devendo este assumir as responsabilidades do referido oficio em conformidade com a Lei 9.973/200, e Decreto nº 3.855/2001 que regulamenta a matéria.</span><span class="color-black" style="font-size:13px"><br><br>
                     </div>
-                  
+
 
                     <div class="container-fluid">
                         <span class="bold color-black" style="font-size:13px">DADOS BANCÁRIOS PARA PAGAMENTO:</span>
@@ -1098,209 +1091,212 @@ leiloeiro às Juntas Comerciais, acompanhada da indicação do respesctivo subst
                         <span class="bold color-black" style="font-size:13px">Valor Total do Pagamento: </span><span class="color-black" style="font-size:13px"><?= $total_nota_format ?></span>
                     </div>
                     <div class="container-fluid" style="font-size:12px">
-                    <br><h6 class="bold text-uppercase" style="color:#FF0000; margin-bottom:-14px;"> Quitação dos lotes via TED</h6><br>
+                        <br>
+                        <h6 class="bold text-uppercase" style="color:#FF0000; margin-bottom:-14px;"> Quitação dos lotes via TED</h6><br>
                     </div>
                     <div class="container-fluid">
-                        <span class="bold color-black" style="font-size:13px">DATA LIMITE PARA PAGAMENTO: </span><span><?=$data_hoje?> até às 16:00.</span>
+                        <span class="bold color-black" style="font-size:13px">DATA LIMITE PARA PAGAMENTO: </span><span><?= $data_hoje ?> até às 16:00.</span>
                     </div>
                     <!--<div class="container-fluid" style="font-size:12px">-->
                     <!--    <h6 class="bold text-uppercase" style="color:#02538B; margin-bottom:-14px;"> ACEITAMOS PAGAMENTOS REALIZADOS PELO BANCO NUBANK E BANCO DO BRASIL</h6><BR>-->
                     <!--</div>-->
-                      
-                      <span class="color-black" style="font-size:13px">Após o pagamento, o arrematante deverá nos enviar até ás 16:00h do dia <?=$data_hoje?> o comprovante de pagamento via e-mail para financeiro@palaciodeleilao.com</span><BR>
+
+                    <span class="color-black" style="font-size:13px">Após o pagamento, o arrematante deverá nos enviar até ás 16:00h do dia <?= $data_hoje ?> o comprovante de pagamento via e-mail para financeiro@palaciodeleilao.com</span><BR>
+
+                    <!-- row -->
+                    <div class="row">
+                        <!-- col -->
+                        <div class="col aligncenter" style="border-right: 1px solid black;">
+                            <!-- row -->
+                            <div class="row p-2">
+                                <!-- col -->
+                                <div class="col aligncenter">
+                                    <img src="img/flat-logo.png" class="img-fluid" style="width:19em; margin-left: 8px!important;" alt="">
+                                </div>
+                                <!-- col -->
+
+                            </div>
+                            <!-- row -->
+                        </div>
+                        <!-- col -->
+
+                        <!-- col -->
+                        <div class="col-8">
+                            <!-- row -->
+                            <div class="row p-2">
+                                <!-- col -->
+                                <div class="col aligncenter" id="">
+                                    <!--<span data-ref="2f98448b-186a-4023-9218-d84623b0713e" style="margin-top: 32px;font-size: 12px;  font-weight: bold;">
+                                    3654 6498 5284 1544 87974 6558 0555 8447 5221 8477 4211 8557 2473</span>-->
+                                    <!-- <img src="img/codigo.webp" class="img-fluid" alt=""> -->
+                                </div>
+                                <!-- col -->
+                                <!-- col -->
+                                <!-- <div class="col-7">
+                                <div class="aligncenter">
+                                    <span style="font-size:10px; font-weight:bold; color:black; text-align:center">
+                                        JUNTA COMERCIAL DO
+                                        ESTADO DE SÃO PAULO:
+                                    </span>
+                                </div>
+                                <div class="w-100 aligncenter">
+                                    <span style="font-size:10px">
+                                        institucional.jucesponline-br-gov.org
+                                    </span>
+                                </div>
 
 
-                </div>
-                <!-- cont -->
-                <!--<div class="row w-100 aligncenter text-center" style="--bs-gutter-x: 0; ">
-                    <h6 class="bold color-black mb-0" style="font-size:14px">REVISÃO DE LEILOEIRO/PREPOSTO(A) NA JUNTA COMERCIAL</h6>
-                </div>-->
 
+                            </div> -->
+                                <!-- col -->
 
+                                <!-- div separa -->
+                                <!--<div class="w-100 mt-2" style="border-top:1px dashed black; margin-left: -6px;"></div>-->
+                                <!-- div separa -->
 
-                <!-- cpm -->
+                                <div class="container-fluid aligncenter" style="margin-top:15px;">
+                                    <h6 class="bold mb-0" style="color:black">TERMO DE RESPONSABILIDADE</h6>
 
-                <!-- row -->
-                <div class="row w-100" style="--bs-gutter-x: 0;">
-                    <!-- col -->
-                    <div class="col-3 " style="">
-                        <!-- row -->
-                        <div class="row">
-                            <!-- col -->
-                           <div class="col aligncenter">
-                                 <!--<img src="img/qrpalacio.png" style="width:8em;margin-top: 5px;" class="img-fluid" alt="">-->
-
-                                <div class="container-fluid mt-1">
-                           <!--<span class=" mb-0" style="color:black;font-size:9px">Abra o aplicativo da câmera do seu celular e aponte para o código</span>-->
+                                </div>
+                                <div class="container-fluid aligncenter mt-1">
+                                    <p class=" mt-0 mb-0" style="font-size:12px; font-weight:400;">BR-262, KM 375 - BOA VISTA DA SERRA, JUATUBA - MG, 35675-000</p>
 
                                 </div>
 
+
+                                <!--<div class="container-fluid aligncenter mt-1">
+                                <p class="bold color-black mt-0 mb-0" style="font-size:14px">PALÁCIO DOS LEILÕES</p>
+                            </div>-->
+
+
+                                <div class="container-fluid aligncenter">
+                                    <p class="bold color-black mt-0 mb-0" style="font-size:13px">EMITIDO EM: <?= $data_hoje ?></p>
+                                </div>
+                                <div class="container-fluid aligncenter mt-1">
+                                    <p class=" mt-0 mb-0" style="font-size:12px; font-weight:400;">Atendimento: (31) 2180-3306 / (31) 3058-2634 / (31) 99704-2767</p>
+                                </div>
+                                <div class="container-fluid aligncenter mt-1">
+                                    <p class=" mt-0 mb-0" style="font-size:12px; font-weight:400;"><a href="https://palaciodeleilao.com/">www.palaciodeleilao.com</a></p>
+                                </div>
                             </div>
-                            <!-- col -->
+                            <!-- row -->
+                        </div>
+                        <!-- col -->
+
+
+
+                    </div>
+                    <br>
+                    <div class="row w-100 aligncenter text-center mt-4" style="--bs-gutter-x: 0; ">
+                        <h6 class="bold color-black mb-0" style="font-size:15px">Site homologado pelo Tribunal de Justiça</h6>
+                        <img src="../web/tmg.jpg" style="width:40px;" alt="">
+                    </div>
+
+                    <div class=" w-100">
+
+                        </br></br>
+                        <div class="div mt-1" style="height:auto;border:1px solid black;">
+
+                            <!-- bazio -->
+
+                            <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0; ">
+                                <span class="color-black" style="font-size:12px">
+                                    Confirmo a compra descrita acima e declaro estar ciente e de acordo com todas as condições estabelecidas.
+                                </span>
+
+                                <!-- outra 3 -->
+
+
+
+
+                                <!-- outra 4 -->
+
+                                <!-- row -->
+
+                                <!-- col -->
+                                <div class="col" style="border-right: 1px solid black;">
+                                    <!-- row -->
+                                    <div class="row">
+                                        <!-- col -->
+                                        <div class="col">
+
+                                            <!-- linha -->
+                                            <div class="text-start" style="height:5px; width:200px; border-top:1px solid black;margin-top:5em;margin-left:30px;"></div>
+                                            <!-- linha -->
+                                            <div class="w-100" style="padding-left:30px">
+                                                <p class="mb-0"><strong>Nome: </strong> <?= $nome_arrematante ?></p>
+                                            </div>
+                                            <div class="w-100" style="padding-left:30px">
+                                                <p class="mb-0"><strong>CPF: </strong> <?= $cpf_arrematante ?></p>
+                                            </div>
+
+
+                                        </div>
+                                        <!-- col -->
+
+                                    </div>
+                                    <!-- row -->
+                                </div>
+                                <!-- col -->
+
+                                <!-- col -->
+                                <div class="col">
+                                    <!-- row -->
+                                    <div class="row">
+
+                                        <!-- col -->
+                                        <div class="col">
+
+
+
+
+
+                                            <!-- linha -->
+                                            <div class="text-start" style="height:5px; width:200px; border-top:1px solid black; margin-left:30px; margin-top:5em;"></div>
+                                            <!-- linha -->
+                                            <img src="img/assinatura.png" style="width: 8em; margin-top: -90px;  margin-left: 2em; " alt="">
+                                            <div class="w-100" style="padding-left:30px; margin-top: 15px;">
+
+                                                <p class="mb-0" style="margin-top:-120px"><strong>Leiloeiro (a): </strong><?= $razao_social ?></p>
+                                            </div>
+                                            <div class="w-100" style="padding-left:30px">
+                                                <p class="mb-0"><strong>Matricula: </strong> 394</p>
+                                            </div>
+                                            <div class="w-100" style="padding-left:30px; font-size: 14px;">
+                                                <p class="mb-0">JUATUBA/MG - <?= $data_hoje ?>.</p>
+                                            </div>
+
+
+                                        </div>
+                                        <!-- col -->
+
+                                    </div>
+                                    <!-- row -->
+                                </div>
+                                <!-- col -->
+
+
+
+                            </div>
+                            <!-- row -->
+
+                            <!-- outra 4 -->
+
+
+                            <!-- outra 5 -->
+                            <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0; ">
+                                <span class="bold color-black" style="font-size:11px">
+                                    APÓS O PAGAMENTO ESTE DOCUMENTO DEVERÁ SER ASSINADO E RECONHECIDO FIRMA POR AUTENTICIDADE DO ARREMATANTE. DOCUMENTO ASSINADO DIGITALMENTE NOS TERMOS DA LEI 11.419/2006, CONFORME IMPRESSÃO À MARGEM DIREITA.
+                                </span>
+                            </div>
+                            <!-- outra 5 -->
+
+
 
                         </div>
-                        <!-- row -->
-                    </div>
-                    <!-- col -->
+                        <!-- div que ta com borda -->
 
-                    <!-- col -->
-                    <div class="col">
-                        <!-- row -->
-                        <div class="row">
-
-
-                            <div class="container-fluid mt-1 " style="padding-left:1em;">
-                                <!--<span class=" mb-0" style="color:black;font-size: 11px; "><br>Palácio dos Leilões, sempre prezando pelo bem estar de nossos clientes e visando sempre garantir sua segurança o leiloeiro/preposto (a) responsável é devidamente reconhecido e cadastrado junto a JUCEMG. Oferecemos um serviço de verificação de autenticidade que poderá ser consultado através do endereco eletronico abaixo ou qrcode.</span>-->
-
-                            </div>
-                            <div class="container-fluid  mt-2" style="padding-left:1em;">
-                                <!--<p class="bold color-black mt-0 mb-0" style="font-size:13px">Acesse o site da junta comercial utilizando o qrcode</p>-->
-                            </div>
-                            <div class="container-fluid  mt-2" style="padding-left:1em;">
-                                <p class="bold color-black mt-0 mb-0" style="font-size:12px ; color:#1670f7">
-                                    
-                                </p>
-                            </div>
-
-                        </div>
-                        <!-- row -->
-                    </div>
-                    <!-- col -->
-
-
-
-                </div>
-                <!-- row -->
-
-                <!-- cpm -->
-
-
-                
-
-            </div>
-
-
-
-        <!-- comeca aqui 2-->
-
-        <!-- conteudo 1-->
-        <div class="container-fluid w-100">
-
-            <!-- bk -->
-            <div class="div_marca_dagua2">
-
-            </div>
-            <!-- bk -->
-
-        </div>
-        <!-- conteudo 1 -->
-
-        <!-- conteudo 2 -->
-        <div class=" w-100">
-
-            </br></br>
-            <div class="div mt-1" style="height:auto;border:1px solid black;">
-                
-                <!-- bazio -->
-                
-                <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0; ">
-                <span class="color-black" style="font-size:12px">
-                Confirmo a compra descrita acima e declaro estar ciente e de acordo com todas as condições estabelecidas.
-                    </span>
-                </div>
-                <!-- outra 3 -->
-
-
-
-
-<!-- outra 4 -->
-
-                <!-- row -->
-                <div class="row w-100" style="border-top:1px solid black;border-bottom:1px solid black;--bs-gutter-x: 0;">
-                    <!-- col -->
-                    <div class="col" style="border-right: 1px solid black;">
-                        <!-- row -->
-                        <div class="row">
-                            <!-- col -->
-                            <div class="col">
-                                         
-<!-- linha -->
-<div class="text-start" style="height:5px; width:200px; border-top:1px solid black;margin-top:5em;margin-left:30px;"></div>
-<!-- linha -->
-<div class="w-100" style="padding-left:30px">
-<p class="mb-0"><strong>Nome: </strong>  <?=$nome_arrematante?></p>            
-</div>
-<div class="w-100" style="padding-left:30px">
-<p class="mb-0"><strong>CPF: </strong>   <?=$cpf_arrematante?></p>            
-</div>
-      
-
-                            </div>
-                            <!-- col -->
-
-                        </div>
-                        <!-- row -->
-                    </div>
-                    <!-- col -->
-
-                    <!-- col -->
-                    <div class="col">
-                        <!-- row -->
-                        <div class="row">
-
-                            <!-- col -->
-                            <div class="col">
-                                         
-                              
-
-                              
-
-  <!-- linha -->
-<div class="text-start" style="height:5px; width:200px; border-top:1px solid black; margin-left:30px; margin-top:5em;"></div>
-<!-- linha -->
-<img src="img/assinatura.png"  style="width: 8em; margin-top: -90px;  margin-left: 2em; " alt="">
-<div class="w-100" style="padding-left:30px; margin-top: 15px;">
-
-<p class="mb-0" style="margin-top:-120px"><strong>Leiloeiro (a): </strong><?= $razao_social ?></p>            
-</div>
-<div class="w-100" style="padding-left:30px">
-<p class="mb-0"><strong>Matricula: </strong> 394</p>
-</div>
-<div class="w-100" style="padding-left:30px; font-size: 14px;">
-<p class="mb-0">JUATUBA/MG - <?=$data_hoje?>.</p>            
-</div>
-      
-
-                            </div>
-                            <!-- col -->
-                         
-                        </div>
-                        <!-- row -->
-                    </div>
-                    <!-- col -->
-
-
-
-                </div>
-                <!-- row -->
-
-<!-- outra 4 -->
-
-
-<!-- outra 5 -->
-<div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0; ">
-                <span class="bold color-black" style="font-size:11px">
-                APÓS O PAGAMENTO ESTE DOCUMENTO DEVERÁ SER ASSINADO E RECONHECIDO FIRMA POR AUTENTICIDADE DO ARREMATANTE. DOCUMENTO ASSINADO DIGITALMENTE NOS TERMOS DA LEI 11.419/2006, CONFORME IMPRESSÃO À MARGEM DIREITA.
-                </span>
-                </div>
-<!-- outra 5 -->
-
-
-
-            </div>
-            <!-- div que ta com borda -->
-
-           <!-- <div class="container aligncenter text-center" style="--bs-gutter-x: 0; ">
+                        <!-- <div class="container aligncenter text-center" style="--bs-gutter-x: 0; ">
                 <h6 class="bold color-black mb-0" style="font-size:14px">
                 BR-262, KM 375 - Boa Vista da Serra, Juatuba - MG, 35675-000
             </h6>
@@ -1322,27 +1318,111 @@ leiloeiro às Juntas Comerciais, acompanhada da indicação do respesctivo subst
 
 
 
-            <div class="row w-100 aligncenter text-center mt-4" style="--bs-gutter-x: 0; ">
-                <h6 class="bold color-black mb-0" style="font-size:15px">Site homologado pelo Tribunal de Justiça</h6>
-                <img src="../web/tmg.jpg" style="width:40px;" alt="">
+
+
+                    </div>
+                    <!-- row -->
+
+                    <!-- acaba aqui -->
+
+
+
+
+
+
+
+
+
+                </div>
+
             </div>
-    
+            <!-- cont -->
+            <!--<div class="row w-100 aligncenter text-center" style="--bs-gutter-x: 0; ">
+                    <h6 class="bold color-black mb-0" style="font-size:14px">REVISÃO DE LEILOEIRO/PREPOSTO(A) NA JUNTA COMERCIAL</h6>
+                </div>-->
+
+
+
+            <!-- cpm -->
+
+            <!-- row -->
+            <div class="row w-100" style="--bs-gutter-x: 0;">
+                <!-- col -->
+                <div class="col-3 " style="">
+                    <!-- row -->
+                    <div class="row">
+                        <!-- col -->
+                        <div class="col aligncenter">
+                            <!--<img src="img/qrpalacio.png" style="width:8em;margin-top: 5px;" class="img-fluid" alt="">-->
+
+                            <div class="container-fluid mt-1">
+                                <!--<span class=" mb-0" style="color:black;font-size:9px">Abra o aplicativo da câmera do seu celular e aponte para o código</span>-->
+
+                            </div>
+
+                        </div>
+                        <!-- col -->
+
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- col -->
+
+                <!-- col -->
+                <div class="col">
+                    <!-- row -->
+                    <div class="row">
+
+
+                        <div class="container-fluid mt-1 " style="padding-left:1em;">
+                            <!--<span class=" mb-0" style="color:black;font-size: 11px; "><br>Palácio dos Leilões, sempre prezando pelo bem estar de nossos clientes e visando sempre garantir sua segurança o leiloeiro/preposto (a) responsável é devidamente reconhecido e cadastrado junto a JUCEMG. Oferecemos um serviço de verificação de autenticidade que poderá ser consultado através do endereco eletronico abaixo ou qrcode.</span>-->
+
+                        </div>
+                        <div class="container-fluid  mt-2" style="padding-left:1em;">
+                            <!--<p class="bold color-black mt-0 mb-0" style="font-size:13px">Acesse o site da junta comercial utilizando o qrcode</p>-->
+                        </div>
+                        <div class="container-fluid  mt-2" style="padding-left:1em;">
+                            <p class="bold color-black mt-0 mb-0" style="font-size:12px ; color:#1670f7">
+
+                            </p>
+                        </div>
+
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- col -->
+
+
+
+            </div>
+            <!-- row -->
+
+            <!-- cpm -->
+
+
+
 
         </div>
-        <!-- row -->
-
-        <!-- acaba aqui -->
 
 
 
+        <!-- comeca aqui 2-->
 
+        <!-- conteudo 1-->
+        <div class="container-fluid w-100">
 
+            <!-- bk -->
+            <div class="div_marca_dagua2">
 
+            </div>
+            <!-- bk -->
 
+        </div>
+        <!-- conteudo 1 -->
 
+        <!-- conteudo 2 -->
 
-    </div>
-    <!-- container  -->
+        <!-- container  -->
 
 
 
