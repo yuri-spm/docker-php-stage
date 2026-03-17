@@ -1104,7 +1104,40 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
                     <span class="color-black" style="font-size:13px">Após o pagamento, o arrematante deverá nos enviar até ás 16:00h do dia <?= $data_hoje ?> o comprovante de pagamento via e-mail para financeiro@palaciodeleilao.com</span><BR>
 
                     <!-- row -->
-                    <div class="row">
+                  
+                      
+                        <div class="div mt-1" style="height:auto;border:1px solid black;">
+                            <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0;">
+                                <span class="color-black" style="font-size:12px">
+                                    Confirmo a compra descrita acima e declaro estar ciente e de acordo com todas as condições estabelecidas.
+                                </span>
+                            </div>
+
+                            <div style="display:flex; width:100%; border-top:1px solid black; border-bottom:1px solid black; align-items:flex-start;">
+                                <div style="width:50%; border-right:1px solid black; padding:24px 18px 10px 24px; box-sizing:border-box;">
+                                    <div class="text-start" style="height:5px; width:170px; border-top:1px solid black; margin-bottom:10px;"></div>
+                                    <p class="mb-0" style="font-size:14px;"><strong>Nome: </strong><?= $nome_arrematante ?></p>
+                                    <p class="mb-0" style="font-size:14px;"><strong>CPF: </strong><?= $cpf_arrematante ?></p>
+                                </div>
+
+                                <div style="width:50%; padding:24px 18px 10px 24px; box-sizing:border-box;">
+                                    <div class="text-start" style="height:5px; width:170px; border-top:1px solid black; margin-bottom:10px;"></div>
+                                    <img src="img/assinatura.png" style="width:6.5em; margin-top:-58px; margin-left:1.4em;" alt="">
+                                    <p class="mb-0" style="margin-top:-72px; font-size:13px;"><strong>Leiloeiro (a): </strong><?= $razao_social ?></p>
+                                    <p class="mb-0" style="font-size:13px;"><strong>Matricula: </strong>394</p>
+                                    <p class="mb-0" style="font-size:13px;">JUATUBA/MG - <?= $data_hoje ?>.</p>
+                                </div>
+                            </div>
+
+                            <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0;">
+                                <span class="bold color-black" style="font-size:11px">
+                                    APÓS O PAGAMENTO ESTE DOCUMENTO DEVERÁ SER ASSINADO E RECONHECIDO FIRMA POR AUTENTICIDADE DO ARREMATANTE. DOCUMENTO ASSINADO DIGITALMENTE NOS TERMOS DA LEI 11.419/2006, CONFORME IMPRESSÃO À MARGEM DIREITA.
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                      <div class="row">
                         <!-- col -->
                         <div class="col aligncenter" style="border-right: 1px solid black;">
                             <!-- row -->
@@ -1182,41 +1215,9 @@ $total_nota_format = number_format($total_nota, 2, ',', '.');
                             <!-- row -->
                         </div>
                         <!-- col -->
-                      
-                        <div class="div mt-1" style="height:auto;border:1px solid black;">
-                            <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0;">
-                                <span class="color-black" style="font-size:12px">
-                                    Confirmo a compra descrita acima e declaro estar ciente e de acordo com todas as condições estabelecidas.
-                                </span>
-                            </div>
-
-                            <div style="display:flex; width:100%; border-top:1px solid black; border-bottom:1px solid black; align-items:flex-start;">
-                                <div style="width:50%; border-right:1px solid black; padding:24px 18px 10px 24px; box-sizing:border-box;">
-                                    <div class="text-start" style="height:5px; width:170px; border-top:1px solid black; margin-bottom:10px;"></div>
-                                    <p class="mb-0" style="font-size:14px;"><strong>Nome: </strong><?= $nome_arrematante ?></p>
-                                    <p class="mb-0" style="font-size:14px;"><strong>CPF: </strong><?= $cpf_arrematante ?></p>
-                                </div>
-
-                                <div style="width:50%; padding:24px 18px 10px 24px; box-sizing:border-box;">
-                                    <div class="text-start" style="height:5px; width:170px; border-top:1px solid black; margin-bottom:10px;"></div>
-                                    <img src="img/assinatura.png" style="width:6.5em; margin-top:-58px; margin-left:1.4em;" alt="">
-                                    <p class="mb-0" style="margin-top:-72px; font-size:13px;"><strong>Leiloeiro (a): </strong><?= $razao_social ?></p>
-                                    <p class="mb-0" style="font-size:13px;"><strong>Matricula: </strong>394</p>
-                                    <p class="mb-0" style="font-size:13px;">JUATUBA/MG - <?= $data_hoje ?>.</p>
-                                </div>
-                            </div>
-
-                            <div class="row w-100 aligncenter text-center p-2" style="--bs-gutter-x: 0;">
-                                <span class="bold color-black" style="font-size:11px">
-                                    APÓS O PAGAMENTO ESTE DOCUMENTO DEVERÁ SER ASSINADO E RECONHECIDO FIRMA POR AUTENTICIDADE DO ARREMATANTE. DOCUMENTO ASSINADO DIGITALMENTE NOS TERMOS DA LEI 11.419/2006, CONFORME IMPRESSÃO À MARGEM DIREITA.
-                                </span>
-                            </div>
-                        </div>
-
-                    </div>
                       <div class="row w-100 aligncenter text-center mt-4" style="--bs-gutter-x: 0; ">
                             <h6 class="bold color-black mb-0" style="font-size:11px">Site homologado pelo Tribunal de Justiça</h6>
-                            <img src="../web/tmg.jpg" style="width:40px;" alt="">
+                            <img src="../web/tmg.jpg" style="width:30px;" alt="">
                         </div>
 
 
