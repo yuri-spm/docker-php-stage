@@ -11,10 +11,10 @@ class OpenWeather
     private HttpClient $httpClient;
     private string $apiKey;
 
-    public function __construct(string $apiKey)
+    public function __construct()
     {
         $this->httpClient = new HttpClient();
-        $this->apiKey     = $apiKey;
+        $this->apiKey     = getenv('OPENWEATHER_API_KEY');
     }
 
    
