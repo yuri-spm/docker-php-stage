@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM php:8.2-apache-bookworm
 
 WORKDIR /var/www/html
 
@@ -8,11 +8,17 @@ RUN apt-get update && apt-get install -y \
     git \
     unzip \
     libzip-dev \
+    libssl-dev \
+    libc-client-dev \
+    libkrb5-dev \
+    ca-certificates \
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install \
         pdo \
         pdo_mysql \
         mysqli \
         zip \
+        imap \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

@@ -1,5 +1,16 @@
+# Variaveis de ambiente locais
 .env
+
+# Dependencias do PHP
 /vendor
+
+# Dependencias do Node.js
 /node_modules
+
+# Arquivos de lock gerados pelos gerenciadores de pacotes
 composer.lock
 package-lock.json
+
+# Arquivos de credenciais locais
+token.json
+credentials.json
